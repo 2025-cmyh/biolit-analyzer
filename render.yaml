@@ -1,0 +1,27 @@
+# render.yaml
+# 这就是在 Render 平台上的“蓝图”
+
+services:
+  # 这是 Web 服务，运行 Gunicorn
+  - type: web
+    name: biolit-web
+    env: python
+    # 构建命令：安装所有依赖
+    buildCommand: "pip install -r requirements.txt"
+    # 启动命令：用 Gunicorn 启动你的 app
+    startCommand: "gunicorn --workers 3 app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5  # 可以根据需要调整 Python 版本
+
+  # 这是后台 Worker，运行 worker.py
+  - type: worker
+    name: biolit-worker
+    env: python
+    # 构建命令和 Web 服务一样，通常会共享构建缓存
+    buildCommand: "pip install -r requirements.txt"
+    # 启动命令：直接运行你的 worker 脚本
+    startCommand: "python worker.py"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5

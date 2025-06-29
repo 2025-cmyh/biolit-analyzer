@@ -1,0 +1,9 @@
+{
+  "name": "Python 3",
+  // ... 可能已有的其他配置 ...
+
+  "forwardPorts": [5000],
+
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y supervisor && pip install --user -r /workspaces/biolit-analyzer/biolit-analyzer/requirements.txt",
+  "postStartCommand": "/usr/bin/supervisord -n -c /workspaces/biolit-analyzer/supervisord.conf"
+}

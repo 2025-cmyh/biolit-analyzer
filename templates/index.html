@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio-Literature Analyzer</title>
+    <style>
+        /* 简单的CSS样式，让页面不那么简陋 */
+/* index.html -> <style> */
+/* ... 其他你已有的CSS样式 ... */
+
+.impact-bar-container {
+    width: 100px;
+    height: 10px;
+    background-color: #e9ecef; /* 使用更柔和的灰色 */
+    border-radius: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    overflow: hidden; /* 确保内部的条不会超出圆角 */
+}
+.impact-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #fceabb, #f8b500); /* 更漂亮的渐变色 */
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out; /* 添加平滑的动画效果 */
+}
+.article-meta {
+    font-size: 0.9em;
+    color: #495057; /* 使用深灰色，更易读 */
+    margin-bottom: 10px;
+}
+.article details summary { /* 优化摘要部分的样式 */
+    cursor: pointer;
+    color: #0077b6;
+    font-size: 0.9em;
+}
+.article details .abstract {
+    font-size: 0.9em;
+    color: #343a40;
+    background-color: #f8f9fa;
+    border-left: 3px solid #0077b6;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.impact-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #fceabb, #f8b500);
+    border-radius: 5px;
+}
+.article-meta {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 10px;
+}
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        h1, h2 { color: #005f73; }
+        .search-container { display: flex; gap: 10px; margin-bottom: 20px; }
+        #search-input { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        #search-button { padding: 10px 20px; background-color: #0077b6; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #search-button:hover { background-color: #023e8a; }
+        #loader { display: none; text-align: center; }
+        .article { border-bottom: 1px solid #eee; padding: 15px 0; }
+        .article h3 { margin: 0 0 5px 0; font-size: 1.1em; }
+        .article p { margin: 0; font-size: 0.9em; color: #666; }
+        .chart-container { margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <h1>Bio-Literature Analyzer 🔬</h1>
+    <p>Enter a biomedical term (e.g., a gene, disease, or technology) to analyze the latest research trends.</p>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="e.g., CRISPR Cas9, p53, Alzheimer's disease">
+
+        <input type="number" id="max-results-input" value="20" min="5" max="5000" title="Number of articles to display">
+        <button id="search-button">Analyze</button>
+    </div>
+
+    <div id="loader">
+        <p>Analyzing literature... This may take a moment.</p>
+    </div>
+
+    <div id="results-container">
+        <div id="analysis-section">
+            <h2>Publication Trend</h2>
+            <div class="chart-container">
+                <canvas id="pub-trend-chart"></canvas>
+            </div>
+        </div>
+        <div id="articles-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dee2e6; padding-bottom: 10px; margin-bottom: 15px;">
+    <h2>Relevant Articles</h2>
+    <div>
+        <label for="sort-select" style="font-size: 0.9em; color: #6c757d;">Sort by:</label>
+        <select id="sort-select" style="padding: 5px; border-radius: 5px; border: 1px solid #ced4da;">
+            <option value="impact-desc">Impact</option>
+            <option value="relevance">Relevance</option>
+            <option value="year-desc">Date (Latest)</option>
+            <option value="citations-desc">Citations</option>
+        </select>
+    </div>
+</div>
+            <div id="articles-list"></div>
+        </div>
+    </div>
+
+    <!-- 引入Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 引入我们自己的JavaScript -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

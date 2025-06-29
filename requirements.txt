@@ -1,0 +1,4 @@
+Flask
+biopython
+pandas
+gunicorn
